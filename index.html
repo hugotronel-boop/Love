@@ -5,7 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Joyeux 1 An ♥️</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:ital,wght@0,400;1,400&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* Place "Willsyard Demo.otf" in the same folder as this HTML file */
+  @font-face {
+    font-family: 'Willsyard';
+    src: url('Willsyard Demo.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+</style>
 <style>
   :root {
     --cream: #fdf6ee;
@@ -73,8 +83,8 @@
     opacity: 0.85;
   }
   .hero-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
+    font-family: 'Willsyard', 'Dancing Script', cursive;
+
     font-size: 2.6rem;
     line-height: 1.15;
     color: var(--cream);
@@ -294,8 +304,8 @@
     display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
   }
   .flying-letter-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic; font-size: 1.2rem;
+    font-family: 'Willsyard', 'Dancing Script', cursive;
+    font-size: 1.2rem;
     color: var(--ink); line-height: 1.25; flex: 1;
   }
   .flying-letter-close {
@@ -322,7 +332,7 @@
   }
   .flying-letter-body p:last-child { margin-bottom: 0; }
   .flying-letter-body .drop-cap::first-letter {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Willsyard', 'Dancing Script', cursive;
     font-size: 3em; line-height: 0.75;
     float: left; margin: 0.05em 0.08em 0 0;
     color: var(--rose-deep);
@@ -369,9 +379,222 @@
     60%  { transform: scale(1.3) rotate(30deg); opacity: 0.8; }
     100% { transform: scale(0) rotate(60deg) translateY(-30px); opacity: 0; }
   }
+
+  /* ══════════════════════════════
+     RIBBON SCREEN
+  ══════════════════════════════ */
+  #ribbon-screen {
+    position: fixed; inset: 0; z-index: 500;
+    background: #0d0408;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  #ribbon-screen.hiding {
+    pointer-events: none;
+  }
+
+  /* Dark vignette bg with subtle texture */
+  #ribbon-screen::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 30% 20%, rgba(160,50,80,0.22) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 70% at 70% 75%, rgba(100,25,50,0.25) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* ── Horizontal ribbon ── */
+  .ribbon-h {
+    position: absolute;
+    left: -5%; right: -5%;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 64px;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0.06) 0%,
+      var(--rose) 18%,
+      #d4809a 48%,
+      var(--rose) 82%,
+      rgba(255,255,255,0.06) 100%
+    );
+    box-shadow:
+      0 0 40px rgba(200,100,130,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.25),
+      inset 0 -1px 0 rgba(0,0,0,0.2);
+    transition: transform 1s cubic-bezier(.4,0,.2,1), opacity 0.6s ease;
+    transform-origin: center center;
+  }
+  /* Shimmer line on ribbon */
+  .ribbon-h::after {
+    content: '';
+    position: absolute; top: 30%; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 40%, rgba(255,255,255,0.4) 60%, transparent 100%);
+  }
+
+  /* ── Vertical ribbon ── */
+  .ribbon-v {
+    position: absolute;
+    top: -5%; bottom: -5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 64px;
+    background: linear-gradient(90deg,
+      rgba(255,255,255,0.06) 0%,
+      var(--rose) 18%,
+      #d4809a 48%,
+      var(--rose) 82%,
+      rgba(255,255,255,0.06) 100%
+    );
+    box-shadow:
+      0 0 40px rgba(200,100,130,0.45),
+      inset 1px 0 0 rgba(255,255,255,0.25),
+      inset -1px 0 0 rgba(0,0,0,0.2);
+    transition: transform 1s cubic-bezier(.4,0,.2,1), opacity 0.6s ease;
+    transform-origin: center center;
+  }
+  .ribbon-v::after {
+    content: '';
+    position: absolute; left: 30%; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.4) 40%, rgba(255,255,255,0.4) 60%, transparent 100%);
+  }
+
+  /* ── Bow knot ── */
+  .bow-wrap {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.8s cubic-bezier(.34,1.3,.64,1), opacity 0.5s ease;
+  }
+
+  .bow {
+    position: relative;
+    width: 130px; height: 80px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Left loop */
+  .bow-loop-left, .bow-loop-right {
+    position: absolute;
+    width: 56px; height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e8829e 0%, var(--rose-deep) 100%);
+    box-shadow: inset 0 2px 6px rgba(255,255,255,0.25), 0 3px 12px rgba(0,0,0,0.4);
+  }
+  .bow-loop-left {
+    left: 4px; top: 4px;
+    transform: rotate(-35deg);
+    transform-origin: right center;
+  }
+  .bow-loop-right {
+    right: 4px; top: 4px;
+    transform: rotate(35deg);
+    transform-origin: left center;
+  }
+
+  /* Tail left */
+  .bow-tail-left, .bow-tail-right {
+    position: absolute;
+    bottom: 0;
+    width: 28px; height: 36px;
+    border-radius: 0 0 12px 4px;
+    background: linear-gradient(160deg, var(--rose) 0%, var(--rose-deep) 100%);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.35);
+  }
+  .bow-tail-left {
+    left: 24px;
+    transform: rotate(12deg);
+    transform-origin: top center;
+  }
+  .bow-tail-right {
+    right: 24px;
+    transform: rotate(-12deg);
+    transform-origin: top center;
+    border-radius: 0 0 4px 12px;
+  }
+
+  /* Center knot */
+  .bow-knot {
+    position: absolute;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #f0a0b8 0%, var(--rose-deep) 100%);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,255,255,0.3);
+    z-index: 1;
+  }
+
+  /* ── Ribbon label ── */
+  .ribbon-label {
+    position: absolute;
+    bottom: 18%;
+    left: 50%; transform: translateX(-50%);
+    text-align: center;
+    white-space: nowrap;
+  }
+  .ribbon-label-text {
+    font-family: 'Willsyard', 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: rgba(255,255,255,0.82);
+    display: block;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  }
+  .ribbon-label-hint {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+    display: block;
+    margin-top: 6px;
+    animation: hintPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes hintPulse {
+    0%, 100% { opacity: 0.35; }
+    50%       { opacity: 0.7; }
+  }
+
+  /* ── Ribbon pulled apart animation ── */
+  #ribbon-screen.hiding .ribbon-h {
+    transform: translateY(calc(-50% - 120vh));
+    opacity: 0;
+  }
+  #ribbon-screen.hiding .ribbon-v {
+    transform: translateX(calc(-50% + 130vw));
+    opacity: 0;
+  }
+  #ribbon-screen.hiding .bow-wrap {
+    transform: scale(0) rotate(20deg) translateY(-60px);
+    opacity: 0;
+  }
+  /* Screen itself fades out after ribbons fly */
+  #ribbon-screen.gone {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
+
+<!-- ══ RIBBON SCREEN ══ -->
+<div id="ribbon-screen">
+  <div class="ribbon-v"></div>
+  <div class="ribbon-h"></div>
+  <div class="bow-wrap">
+    <div class="bow">
+      <div class="bow-loop-left"></div>
+      <div class="bow-loop-right"></div>
+      <div class="bow-tail-left"></div>
+      <div class="bow-tail-right"></div>
+      <div class="bow-knot"></div>
+    </div>
+  </div>
+  <div class="ribbon-label">
+    <span class="ribbon-label-text">Pour toi, mon amour ♥</span>
+    <span class="ribbon-label-hint">touche le nœud pour ouvrir</span>
+  </div>
+</div>
 
 <!-- Falling petals -->
 <div id="petals"></div>
@@ -511,6 +734,34 @@ const letters = [
   }
 ];
 
+// ── RIBBON SCREEN ──
+const ribbonScreen = document.getElementById('ribbon-screen');
+
+function openRibbon() {
+  // Burst sparkles from center
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  for (let i = 0; i < 12; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.zIndex = '600';
+    s.textContent = ['✨','💫','♥','🌸','⭐','🎀'][i % 6];
+    s.style.left = (cx + (Math.random() - 0.5) * 160) + 'px';
+    s.style.top  = (cy + (Math.random() - 0.5) * 160) + 'px';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 800);
+  }
+  ribbonScreen.classList.add('hiding');
+  setTimeout(() => {
+    ribbonScreen.classList.add('gone');
+    setTimeout(() => ribbonScreen.remove(), 450);
+  }, 900);
+}
+
+ribbonScreen.addEventListener('click', openRibbon);
+ribbonScreen.addEventListener('touchend', e => { e.preventDefault(); openRibbon(); }, { passive: false });
+
+// ── MAIN APP ──
 // Build grid
 const grid = document.getElementById('grid');
 letters.forEach((letter, i) => {
