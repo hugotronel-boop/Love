@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Joyeux 1 An ♥️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:ital,wght@0,400;1,400&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdf6ee;
+    --parchment: #f5e6d0;
+    --rose: #c9748a;
+    --rose-deep: #9e4a60;
+    --gold: #c8a96e;
+    --gold-light: #e8d4a0;
+    --ink: #2a1a1f;
+    --ink-soft: #5a3a42;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    width: 100%; min-height: 100%;
+    background: #1a0a0f;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    overflow-x: hidden;
+  }
+
+  /* ── BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(180,60,90,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 80%, rgba(120,30,55,0.22) 0%, transparent 60%),
+      radial-gradient(ellipse 100% 100% at 50% 50%, #1a0a0f 0%, #0d0408 100%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── PETALS ── */
+  .petal {
+    position: fixed; pointer-events: none; z-index: 1;
+    font-size: 1.1rem; opacity: 0;
+    animation: petalFall linear infinite;
+  }
+  @keyframes petalFall {
+    0%   { transform: translateY(-20px) rotate(0deg) translateX(0); opacity: 0; }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.3; }
+    100% { transform: translateY(105vh) rotate(360deg) translateX(40px); opacity: 0; }
+  }
+
+  /* ── WRAPPER ── */
+  .wrapper {
+    position: relative; z-index: 2;
+    padding: 0 0 60px;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 60px 24px 40px;
+  }
+  .hero-date {
+    font-family: 'Dancing Script', cursive;
+    font-size: 0.95rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.85;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 2.6rem;
+    line-height: 1.15;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+  .hero-hearts {
+    color: var(--rose);
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+    display: block;
+    margin: 14px 0;
+  }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--gold-light);
+    opacity: 0.75;
+    line-height: 1.6;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; margin: 4px 24px 28px;
+  }
+  .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); opacity: 0.4; }
+  .divider-icon { color: var(--rose); font-size: 0.85rem; }
+
+  /* ── GRID ── */
+  .letters-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding: 0 16px;
+  }
+  .letters-grid .letter-item:first-child {
+    grid-column: 1 / -1;
+  }
+
+  /* ── LETTER ITEM ── */
+  .letter-item { position: relative; }
+
+  /* ── ENVELOPE ── */
+  .envelope-wrap {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .envelope-wrap:active { transform: scale(0.95); }
+
+  .envelope {
+    background: linear-gradient(160deg, var(--parchment) 0%, #edd9b8 100%);
+    border-radius: 8px 8px 4px 4px;
+    box-shadow:
+      0 4px 20px rgba(0,0,0,0.5),
+      0 1px 3px rgba(200,160,110,0.3),
+      inset 0 1px 0 rgba(255,255,255,0.4);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Envelope flap (top triangle) */
+  .envelope-flap {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 50%;
+    overflow: hidden;
+    z-index: 3;
+    transform-origin: top center;
+    transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .envelope-flap::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 200%;
+    background: linear-gradient(175deg, #e8ceac 0%, #d4b48e 60%);
+    clip-path: polygon(0 0, 100% 0, 50% 55%);
+  }
+  .envelope-flap::after {
+    content: '';
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--rose) 0%, var(--rose-deep) 100%);
+    top: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+
+  /* Envelope body content */
+  .envelope-body {
+    position: relative; z-index: 1;
+    padding: 20px 14px 16px;
+    min-height: 110px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end;
+    gap: 6px;
+  }
+
+  /* Letter peeking out */
+  .letter-peek {
+    position: absolute;
+    top: 8px; left: 10%; right: 10%;
+    height: 60px;
+    background: linear-gradient(180deg, #fff9f2 0%, #fdf0e0 100%);
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
+    z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .letter-peek-lines {
+    width: 70%; opacity: 0.35;
+  }
+  .letter-peek-lines span {
+    display: block;
+    height: 1.5px;
+    background: var(--ink-soft);
+    border-radius: 2px;
+    margin: 5px 0;
+  }
+  .letter-peek-lines span:nth-child(1) { width: 100%; }
+  .letter-peek-lines span:nth-child(2) { width: 75%; }
+  .letter-peek-lines span:nth-child(3) { width: 88%; }
+
+  /* Side triangles on envelope */
+  .envelope::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; top: 30%;
+    background: linear-gradient(175deg, transparent 49%, #c9ae8c 50%);
+    z-index: 0;
+  }
+  .envelope::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; top: 30%;
+    background: linear-gradient(185deg, transparent 49%, #c9ae8c 50%);
+    z-index: 0;
+  }
+
+  .envelope-label {
+    font-family: 'Dancing Script', cursive;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    text-align: center;
+    line-height: 1.3;
+    position: relative; z-index: 4;
+    padding: 0 6px;
+  }
+  .letters-grid .letter-item:first-child .envelope-label {
+    font-size: 0.95rem;
+  }
+
+  .envelope-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.65rem;
+    color: var(--rose-deep);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    position: relative; z-index: 4;
+  }
+
+  /* Open state */
+  .envelope-wrap.open .envelope-flap {
+    transform: rotateX(180deg);
+  }
+
+  /* ── BACKDROP ── */
+  .backdrop {
+    position: fixed; inset: 0; z-index: 90;
+    background: rgba(10,2,6,0);
+    pointer-events: none;
+    transition: background 0.4s ease;
+  }
+  .backdrop.visible {
+    background: rgba(10,2,6,0.78);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    pointer-events: all;
+  }
+
+  /* ── FLYING LETTER ── */
+  .flying-letter {
+    position: fixed;
+    z-index: 110;
+    background: linear-gradient(160deg, #fdf6ee 0%, #f5e6d0 100%);
+    border-radius: 6px;
+    box-shadow: 0 8px 50px rgba(0,0,0,0.55), 0 2px 8px rgba(180,120,80,0.2);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    pointer-events: none;
+    transform-origin: top center;
+    will-change: transform, top, left, width, height, opacity;
+  }
+  .flying-letter.animating {
+    transition:
+      top    0.52s cubic-bezier(.34,1.28,.64,1),
+      left   0.52s cubic-bezier(.34,1.28,.64,1),
+      width  0.52s cubic-bezier(.34,1.28,.64,1),
+      height 0.52s cubic-bezier(.34,1.28,.64,1),
+      opacity 0.3s ease,
+      transform 0.52s cubic-bezier(.34,1.28,.64,1);
+  }
+  .flying-letter.open-state { pointer-events: all; }
+
+  .flying-letter-top {
+    background: linear-gradient(90deg, var(--rose-deep), var(--rose), var(--gold), var(--rose), var(--rose-deep));
+    height: 4px; flex-shrink: 0;
+  }
+  .flying-letter-header {
+    padding: 14px 18px 10px;
+    border-bottom: 1px solid rgba(180,120,100,0.2);
+    flex-shrink: 0;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
+  }
+  .flying-letter-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic; font-size: 1.2rem;
+    color: var(--ink); line-height: 1.25; flex: 1;
+  }
+  .flying-letter-close {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(158,74,96,0.1); border: none;
+    color: var(--rose-deep); font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0;
+    opacity: 0; transition: opacity 0.25s ease 0.3s;
+  }
+  .flying-letter.open-state .flying-letter-close { opacity: 1; }
+
+  .flying-letter-body {
+    flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: 18px 18px 32px;
+    opacity: 0; transition: opacity 0.3s ease 0.25s;
+  }
+  .flying-letter.open-state .flying-letter-body { opacity: 1; }
+
+  .flying-letter-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.06rem; line-height: 1.82;
+    color: var(--ink); margin-bottom: 1em;
+  }
+  .flying-letter-body p:last-child { margin-bottom: 0; }
+  .flying-letter-body .drop-cap::first-letter {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3em; line-height: 0.75;
+    float: left; margin: 0.05em 0.08em 0 0;
+    color: var(--rose-deep);
+  }
+  .modal-deco {
+    text-align: center; color: var(--rose);
+    font-size: 0.9rem; letter-spacing: 0.3em;
+    margin: 16px 0 14px; opacity: 0.55;
+  }
+
+
+
+  .modal-deco {
+    text-align: center;
+    color: var(--rose);
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    margin: 20px 0 16px;
+    opacity: 0.6;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 30px 24px 20px;
+    position: relative; z-index: 2;
+  }
+  .footer-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.05rem;
+    color: var(--gold);
+    opacity: 0.6;
+  }
+
+
+  /* ── SPARKLES ── */
+  .sparkle {
+    position: fixed; pointer-events: none; z-index: 200;
+    font-size: 1rem;
+    animation: sparkleAnim 0.7s ease-out forwards;
+  }
+  @keyframes sparkleAnim {
+    0%   { transform: scale(0) rotate(0deg); opacity: 1; }
+    60%  { transform: scale(1.3) rotate(30deg); opacity: 0.8; }
+    100% { transform: scale(0) rotate(60deg) translateY(-30px); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Falling petals -->
+<div id="petals"></div>
+
+<div class="wrapper">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-date">1er Juin 2025 · 1er Juin 2026</div>
+    <div class="hero-title">Joyeux<br>un an,<br>mon amour</div>
+    <span class="hero-hearts">♥ ♥ ♥ ♥ ♥</span>
+    <p class="hero-sub">Ouvre chaque lettre…<br>elles sont toutes pour toi.</p>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-icon">✦</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- LETTERS GRID -->
+  <div class="letters-grid" id="grid"></div>
+
+  <div class="footer">
+    <p class="footer-text">Pour toujours & encore ♥</p>
+  </div>
+
+</div>
+
+<!-- BACKDROP -->
+<div class="backdrop" id="backdrop"></div>
+
+<!-- FLYING LETTER -->
+<div class="flying-letter" id="flyingLetter">
+  <div class="flying-letter-top"></div>
+  <div class="flying-letter-header">
+    <div class="flying-letter-title" id="flyingTitle"></div>
+    <button class="flying-letter-close" id="flyingClose">✕</button>
+  </div>
+  <div class="flying-letter-body" id="flyingBody"></div>
+</div>
+
+<script>
+const letters = [
+  {
+    title: "L'envie d'être parent…",
+    num: "I",
+    content: [
+      "Je pense que l'envie de devenir parent peut naître de deux façons.",
+      "La première, c'est cette envie qu'on peut avoir depuis toujours : celle de vouloir un enfant un jour, sans forcément savoir avec qui ni quand.",
+      "La deuxième, c'est celle qui apparaît quand on rencontre la bonne personne.",
+      "Pour ma part, j'ai toujours su qu'un jour je voudrais être père… mais cette envie restait lointaine. Avant nous, je ne me sentais pas prêt.",
+      "Puis un jour, tu es entrée dans ma vie.",
+      "Et sans même m'en rendre compte, cette envie est devenue une évidence.",
+      "Aujourd'hui, il n'y a plus une seule chose que je veux autant que devenir papa… Le papa de nos enfants. ❤️"
+    ]
+  },
+  {
+    title: "Le coup de foudre…",
+    num: "II",
+    content: [
+      "Le coup de foudre, c'est quand même quelque chose…",
+      "Quand on ne l'a jamais vraiment vécu, on peut croire l'avoir ressenti. Mais le jour où ça nous arrive en pleine face… waouh. Ça nous met une sacrée claque.",
+      "J'ai déjà eu l'impression de l'avoir ressenti une fois. Mais en réalité, ce n'était rien… juste un grain de sable comparé à ce que je ressens aujourd'hui.",
+      "En fait, le coup de foudre, c'est exactement comme son nom l'indique : ça arrive d'un coup, comme un éclair.",
+      "Et c'est exactement ce que j'ai ressenti avec toi.",
+      "C'est ce déclic qui te fait te dire : « Oui, c'est bon… c'est cette personne. »",
+      "Quand les sentiments arrivent sans prévenir, qu'ils te tombent dessus sans que tu t'y attendes, il est déjà trop tard. Tu ne peux plus faire machine arrière. Parce qu'au fond, tu sais que si tu laisses passer ça, tu risques de ne plus jamais ressentir quelque chose d'aussi fort.",
+      "Et moi, ce coup de foudre… c'est toi."
+    ]
+  },
+  {
+    title: "Il me suffit de te regarder",
+    num: "III",
+    content: [
+      "Il me suffit de te regarder quelques secondes pour retomber amoureux.",
+      "À cet instant où je pose les yeux sur toi, je te redécouvre comme au tout début, quand l'amour n'était encore qu'une magnifique découverte.",
+      "Je te regarde, et tout s'arrête. Je le vis exactement comme dans les films romantiques.",
+      "Enfin voilà… je te regarde, et mes yeux ne jurent plus que par toi. Mon cœur ne bat plus que pour l'amour, et mon cerveau, lui, ne pense plus… il te regarde aussi."
+    ]
+  },
+  {
+    title: "Ce que tu m'as apporté",
+    num: "IV",
+    content: [
+      "En un an, tu m'as fait changer. En bien ! Oui ahah, je précise : en bien.",
+      "Je le sens moi-même, je ne suis plus le même. Je me sens plus serein avec la personne que je suis, et ça, vraiment, c'est grâce à toi mon cœur. Tu m'aides, même sans le vouloir, à devenir un homme meilleur, et je t'en remercie tellement.",
+      "Et puis, ça peut paraître bête, mais je suis enfin moi-même. Sans filtre, sans peur d'être jugé. Et ça, ça fait un bien fou.",
+      "Le plus beau dans tout ça, c'est que les gens qui m'entourent le voient aussi. Ils me trouvent plus heureux, plus expressif, plus joyeux. Et de savoir qu'ils sont heureux de me voir comme ça, ça me fait tellement de bien.",
+      "Tu sais, on dit qu'avec la bonne personne, on ne peut qu'être tiré vers le haut… Eh bien, oui, je le confirme.",
+      "Et j'espère de tout cœur faire la même chose pour toi."
+    ]
+  },
+  {
+    title: "Notre complicité !",
+    num: "V",
+    content: [
+      "Nous deux, c'est étrange…",
+      "Étrange, parce qu'on pense pareil… enfin souvent pareil ahah. Et puis il y a tous ces petits trucs qui me font dire que cette fameuse connexion dont on rigole existe vraiment.",
+      "En un an, je pense qu'on ne peut plus le nier. Il y a tellement de sujets sur lesquels on est d'accord, tellement de choses qu'on aime tous les deux…",
+      "C'est tellement agréable de vivre avec une personne qui aime les mêmes choses que toi, qui, d'un simple regard, comprend ce que tu ressens ou ce que tu penses.",
+      "Et nos regards complices… oh là là, je les aime tellement. Ils veulent tout dire et rien dire en même temps. Rien, par la simplicité du geste… et tout, parce que nos yeux parlent."
+    ]
+  },
+  {
+    title: "Nous dans le temps",
+    num: "VI",
+    content: [
+      "Nous, avec le temps, je nous vois comme une sorte de récit où, malgré les péripéties de la vie, on reste un couple fort et soudé.",
+      "Avec le temps, je nous vois aller loin. Loin, unis par l'amour qu'on se porte, et par tout l'amour qui nous entourera… celui de nos enfants.",
+      "Avec le temps, je nous vois heureux. Heureux de tout ce qu'on va bâtir de nos propres mains.",
+      "En fait, avec le temps, je nous vois bien… Parce que je sais qu'on saura surmonter les épreuves et avancer à deux, main dans la main."
+    ]
+  },
+  {
+    title: "Je m'engage…",
+    num: "VII",
+    content: [
+      "Je m'engage à te rendre heureuse chaque jour, et ce jusqu'à la fin de notre vie.",
+      "Je m'engage à élever nos enfants et à faire tout mon possible pour les rendre heureux aussi longtemps que je le pourrai.",
+      "Je m'engage à t'aimer de l'amour le plus fort et le plus beau que tu n'aies jamais connu dans ta vie.",
+      "Je m'engage à te soutenir et à être présent, quoi qu'il arrive.",
+      "Je m'engage à être celui que tu attends depuis si longtemps."
+    ]
+  },
+  {
+    title: "Merci",
+    num: "VIII",
+    content: [
+      "Merci d'être entrée dans ma vie.",
+      "Merci de m'aimer.",
+      "Merci de me faire confiance.",
+      "Merci de construire tout ça avec moi.",
+      "Merci de faire de moi un homme meilleur.",
+      "Et merci de m'offrir la plus belle des aventures : celle de t'aimer, et de construire notre famille. ♥️"
+    ]
+  }
+];
+
+// Build grid
+const grid = document.getElementById('grid');
+letters.forEach((letter, i) => {
+  const item = document.createElement('div');
+  item.className = 'letter-item';
+  item.innerHTML = `
+    <div class="envelope-wrap" data-index="${i}">
+      <div class="envelope">
+        <div class="envelope-flap"></div>
+        <div class="letter-peek">
+          <div class="letter-peek-lines">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <div class="envelope-body">
+          <div class="envelope-num">Lettre ${letter.num}</div>
+          <div class="envelope-label">${letter.title}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  grid.appendChild(item);
+});
+
+// Petals
+const petalContainer = document.getElementById('petals');
+const petalEmojis = ['🌸','🌹','✿','❀','♥'];
+for (let i = 0; i < 12; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = petalEmojis[i % petalEmojis.length];
+  p.style.left = (Math.random() * 100) + '%';
+  p.style.animationDuration = (8 + Math.random() * 10) + 's';
+  p.style.animationDelay = (Math.random() * 12) + 's';
+  p.style.fontSize = (0.7 + Math.random() * 0.7) + 'rem';
+  petalContainer.appendChild(p);
+}
+
+// ── FLYING LETTER SYSTEM ──
+const backdrop     = document.getElementById('backdrop');
+const flyingLetter = document.getElementById('flyingLetter');
+const flyingTitle  = document.getElementById('flyingTitle');
+const flyingBody   = document.getElementById('flyingBody');
+const flyingClose  = document.getElementById('flyingClose');
+
+let currentEnvelope = null;
+let isOpen = false;
+
+// Target open rect: nearly full screen, centered, with safe insets
+function getOpenRect() {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const margin = 20;
+  const maxW = Math.min(460, vw - margin * 2);
+  const maxH = Math.min(vh * 0.84, vh - 80);
+  return {
+    left:   (vw - maxW) / 2,
+    top:    (vh - maxH) / 2,
+    width:  maxW,
+    height: maxH
+  };
+}
+
+function setLetterRect(rect, instant) {
+  if (instant) flyingLetter.classList.remove('animating');
+  flyingLetter.style.left   = rect.left   + 'px';
+  flyingLetter.style.top    = rect.top    + 'px';
+  flyingLetter.style.width  = rect.width  + 'px';
+  flyingLetter.style.height = rect.height + 'px';
+}
+
+function openLetter(envWrap, index) {
+  if (isOpen) return;
+  isOpen = true;
+  currentEnvelope = envWrap;
+
+  const letter = letters[index];
+  flyingTitle.textContent = letter.title;
+  flyingBody.innerHTML = letter.content.map((p, i) =>
+    `<p class="${i === 0 ? 'drop-cap' : ''}">${p}</p>`
+  ).join('<div class="modal-deco">· · ·</div>');
+
+  // Start position: envelope's bounding rect
+  const envRect = envWrap.getBoundingClientRect();
+  const startRect = {
+    left:   envRect.left,
+    top:    envRect.top,
+    width:  envRect.width,
+    height: envRect.height
+  };
+
+  // 1. Place letter exactly over envelope, no transition
+  flyingLetter.style.opacity = '0';
+  flyingLetter.style.transform = 'scale(0.92)';
+  setLetterRect(startRect, true);
+
+  // 2. Open flap
+  envWrap.classList.add('open');
+
+  // Force reflow
+  flyingLetter.getBoundingClientRect();
+
+  // 3. Fade in letter at envelope size
+  flyingLetter.style.opacity = '1';
+
+  // 4. Next frame: enable transitions and fly to open rect
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      flyingLetter.classList.add('animating');
+      const openRect = getOpenRect();
+      setLetterRect(openRect, false);
+      flyingLetter.style.transform = 'scale(1)';
+
+      // Show backdrop
+      backdrop.classList.add('visible');
+
+      // Mark as open after transition
+      setTimeout(() => {
+        flyingLetter.classList.add('open-state');
+      }, 400);
+    });
+  });
+}
+
+function closeLetter() {
+  if (!isOpen) return;
+  isOpen = false;
+
+  // Hide text immediately
+  flyingLetter.classList.remove('open-state');
+  backdrop.classList.remove('visible');
+
+  // Fly back to envelope
+  const envRect = currentEnvelope.getBoundingClientRect();
+  const endRect = {
+    left:   envRect.left,
+    top:    envRect.top,
+    width:  envRect.width,
+    height: envRect.height
+  };
+
+  flyingLetter.classList.add('animating');
+  setLetterRect(endRect, false);
+  flyingLetter.style.transform = 'scale(0.92)';
+
+  setTimeout(() => {
+    flyingLetter.style.opacity = '0';
+  }, 300);
+
+  // After letter lands: close flap
+  setTimeout(() => {
+    currentEnvelope.classList.remove('open');
+    currentEnvelope = null;
+    flyingLetter.classList.remove('animating');
+    flyingLetter.style.transform = '';
+  }, 550);
+}
+
+// Sparkle
+function spawnSparkles(x, y) {
+  const emojis = ['✨','⭐','💫','♥','🌸'];
+  for (let i = 0; i < 5; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    s.style.left = (x + (Math.random() - 0.5) * 60) + 'px';
+    s.style.top  = (y + (Math.random() - 0.5) * 60) + 'px';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 700);
+  }
+}
+
+grid.addEventListener('click', e => {
+  const wrap = e.target.closest('.envelope-wrap');
+  if (!wrap || isOpen) return;
+  const rect = wrap.getBoundingClientRect();
+  spawnSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2);
+  openLetter(wrap, parseInt(wrap.dataset.index));
+});
+
+flyingClose.addEventListener('click', closeLetter);
+backdrop.addEventListener('click', closeLetter);
+
+// Swipe down on the letter to close
+let touchStartY = 0;
+flyingLetter.addEventListener('touchstart', e => {
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+flyingLetter.addEventListener('touchend', e => {
+  if (flyingBody.scrollTop > 0) return; // only close if scrolled to top
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (dy > 80) closeLetter();
+}, { passive: true });
+</script>
+</body>
+</html>
